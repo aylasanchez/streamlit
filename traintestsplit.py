@@ -19,7 +19,17 @@ badDrivers = pd.read_csv('bad-drivers.csv')
 
 
 
-
+hide = """
+        <style>
+        max-width: {max_width:400}px;
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        body {overflow: hidden;}
+        div.block-container {padding-top:1rem;}
+        div.block-container {padding-bottom:1rem;}
+        </style>
+        """
 
 
 # Select the proportions of the training-validation-test split using a slider
@@ -33,7 +43,7 @@ testProportion = 1 - trainingProportion - validationProportion
 
 
 if a == 0 or a == b or b == 100:
-    st.write("The data will be split into training, validation, and test data, so the cutoffs should be distinct, not 0, and not 100.")
+    st.write("The data will be split into training, validation, and test data. All three sets should be nonempty, so the cutoffs should be distinct, not 0, and not 100.")
 else:
     # Split off the test data
     trainingAndValidationData, testData = train_test_split(
