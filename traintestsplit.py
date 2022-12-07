@@ -129,3 +129,4 @@ else:
     cola, colb, colc = st.columns([1,3,1])
     with colb:
         st.pyplot(plt)
+    st.write("Description: The training data, validation data, and testing data have similar but not identical distributions. The more evenly split the data is, the more similar the distributions are.")
