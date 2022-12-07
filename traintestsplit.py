@@ -33,7 +33,7 @@ hide = """
 
 
 # Select the proportions of the training-validation-test split using a slider
-a,b = st.slider("Select cutoffs for the training-validation-test split",
+a,b = st.slider("Select cutoffs for the training-validation-test split percentages",
     min_value=0, max_value=100, value=(70,80), step=1)
 
 trainingProportion = a / 100
@@ -42,7 +42,7 @@ testProportion = 1 - trainingProportion - validationProportion
 
 
 
-if a == 0 or a == b or b == 100:
+if a < 3 or a == b or b == 100:
     st.write("The data will be split into training, validation, and test data. All three sets should be nonempty, so the cutoffs should be distinct, not 0, and not 100.")
 else:
     # Split off the test data
@@ -59,35 +59,35 @@ else:
     col1, col2, col3 = st.columns([1,1,1])
 
     with col1:
-        st.write("Training data: ",a, "%")
-        st.write("n: ",len(trainingData))
-        st.write("x mean: ", (trainingData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.mean))[0].astype(int))
-        st.write("x sd: ", (trainingData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.std))[0].astype(int))
-        st.write("y mean: ", (trainingData[['Car Insurance Premiums ($)']].apply(np.mean))[0].astype(int))
-        st.write("y sd: ", (trainingData[['Car Insurance Premiums ($)']].apply(np.std))[0].astype(int))
-        st.write("r: ", np.round(r_regression(trainingData[['Losses incurred by insurance companies for collisions per insured driver ($)']].values,np.ravel(trainingData[['Car Insurance Premiums ($)']].values))[0],3) )
+        st.write("Training data: ",a, "%  \n  ",
+        "n: ",len(trainingData), "  \n  ",
+        "x mean: ", (trainingData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.mean))[0].astype(int), "  \n  ",
+        "x sd: ", (trainingData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.std))[0].astype(int), "  \n  ",
+        "y mean: ", (trainingData[['Car Insurance Premiums ($)']].apply(np.mean))[0].astype(int), "  \n  ",
+        "y sd: ", (trainingData[['Car Insurance Premiums ($)']].apply(np.std))[0].astype(int), "  \n  ",
+        "r: ", np.round(r_regression(trainingData[['Losses incurred by insurance companies for collisions per insured driver ($)']].values,np.ravel(trainingData[['Car Insurance Premiums ($)']].values))[0],3) )
 
         includeTraining = st.checkbox('Graph training data', key="check1", value=True)
 
     with col2:
-        st.write("Validation data: ",(b-a), "%")
-        st.write("n: ",len(validationData))
-        st.write("x mean: ", (validationData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.mean))[0].astype(int))
-        st.write("x sd: ", (validationData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.std))[0].astype(int))
-        st.write("y mean: ", (validationData[['Car Insurance Premiums ($)']].apply(np.mean))[0].astype(int))
-        st.write("y sd: ", (validationData[['Car Insurance Premiums ($)']].apply(np.std))[0].astype(int))
-        st.write("r: ", np.round(r_regression(validationData[['Losses incurred by insurance companies for collisions per insured driver ($)']].values,np.ravel(validationData[['Car Insurance Premiums ($)']].values))[0],3) )
+        st.write("Validation data: ",(b-a), "%  \n  ",
+        "n: ",len(validationData), "  \n  ",
+        "x mean: ", (validationData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.mean))[0].astype(int), "  \n  ",
+        "x sd: ", (validationData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.std))[0].astype(int), "  \n  ",
+        "y mean: ", (validationData[['Car Insurance Premiums ($)']].apply(np.mean))[0].astype(int), "  \n  ",
+        "y sd: ", (validationData[['Car Insurance Premiums ($)']].apply(np.std))[0].astype(int), "  \n  ",
+        "r: ", np.round(r_regression(validationData[['Losses incurred by insurance companies for collisions per insured driver ($)']].values,np.ravel(validationData[['Car Insurance Premiums ($)']].values))[0],3) )
 
         includeValidation = st.checkbox('Graph validation data', key="check2", value=True)
 
     with col3:
-        st.write("Test data: ",(100-b), "%")
-        st.write("n: ",len(testData))
-        st.write("x mean: ", (testData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.mean))[0].astype(int))
-        st.write("x sd: ", (testData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.std))[0].astype(int))
-        st.write("y mean: ", (testData[['Car Insurance Premiums ($)']].apply(np.mean))[0].astype(int))
-        st.write("y sd: ", (testData[['Car Insurance Premiums ($)']].apply(np.std))[0].astype(int))
-        st.write("r: ", np.round(r_regression(testData[['Losses incurred by insurance companies for collisions per insured driver ($)']].values,np.ravel(testData[['Car Insurance Premiums ($)']].values))[0],3) )
+        st.write("Test data: ",(100-b), "%  \n  ",
+        "n: ",len(testData), "  \n  ",
+        "x mean: ", (testData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.mean))[0].astype(int), "  \n  ",
+        "x sd: ", (testData[['Losses incurred by insurance companies for collisions per insured driver ($)']].apply(np.std))[0].astype(int), "  \n  ",
+        "y mean: ", (testData[['Car Insurance Premiums ($)']].apply(np.mean))[0].astype(int), "  \n  ",
+        "y sd: ", (testData[['Car Insurance Premiums ($)']].apply(np.std))[0].astype(int), "  \n  ",
+        "r: ", np.round(r_regression(testData[['Losses incurred by insurance companies for collisions per insured driver ($)']].values,np.ravel(testData[['Car Insurance Premiums ($)']].values))[0],3) )
 
         includeTest = st.checkbox('Graph test data', key="check3", value=True)
 
